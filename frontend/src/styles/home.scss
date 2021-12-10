@@ -1,0 +1,38 @@
+@media screen and (min-width: 0px) and (max-width: 400px) {
+    #book-title {
+      display: none;
+    }
+    #cart-title {
+      display: none;
+    }
+    #search-bar {
+      width: 100%;
+    }
+    #search-icon {
+      display: none;
+    }
+  }
+  .main-container {
+    margin: 3% auto;
+    width: 85%;
+  }
+  
+  .book-container {
+    flex-grow: 1;
+    padding: 3;
+    margin-top: 70px;
+  }
+  
+  #book-count {
+    font-size: 25px;
+    margin-bottom: 10px;
+  }
+  #book-count-span {
+    color: grey;
+    font-size: 12px;
+  }
+  #sort-by-btn{
+    text-transform: none;
+    color:black;
+    border:1px solid black
+}
