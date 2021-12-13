@@ -6,6 +6,7 @@ import Error from "./pages/Error.jsx"
 import Dashboard from "./pages/dashboard.jsx"
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import CustomerAddress from "./components/customer.jsx";
 
 export default function Routers() {
   return (
@@ -17,7 +18,8 @@ export default function Routers() {
           <Route path="/forgot-password" component={ForgetPassword} />
           <Route path="/reset/:token" component={ResetPassword} />
           <Route path="/books" component={Dashboard} />
-          <Route path="*" component={Error} />  
+          <Route path='/cart' component={CustomerAddress} />
+          <Route path="*" component={Error} />
         </Switch>
       </Router>
     </>

@@ -37,13 +37,28 @@ const count = async () => {
   
 }
 
-const maxBook = async (max, startIndex) => {
+const maxBook = async (max, startIndex, sort) => {
   try {
-    return await Product.find().sort({ _id: -1}).limit(max).skip(startIndex)
+    if(sort == "low"){
+      return await Product.find().sort({ price: 1}).limit(max).skip(startIndex)
+    }else if(sort == "high"){
+      return await Product.find().sort({ price: -1}).limit(max).skip(startIndex)
+    }else{
+      return await Product.find().sort({ _id: -1}).limit(max).skip(startIndex)
+    }
+    
   } catch (error) {
     throw error
-  }
-  
+  } 
 }
 
-module.exports = {findBooks, count, maxBook}
+const getBooksBySearch = async (searchTerm) => {
+  try {
+    const searchQuery = new RegExp(searchTerm, "i");
+    return await Product.find({$or:[{author: searchQuery},{title: searchQuery}]})
+  } catch (error) {
+    throw error
+  } 
+}
+
+module.exports = {findBooks, count, maxBook, getBooksBySearch}

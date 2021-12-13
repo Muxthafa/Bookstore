@@ -5,6 +5,8 @@ const mongoose = require("mongoose");
 const OrderSchema = mongoose.Schema(
   {
     userId: {type: mongoose.Schema.Types.ObjectId , Ref: "User"},
+    orderNumber: {type: String, required: true},
+    customer: {type: mongoose.Schema.Types.ObjectId , Ref: "Address"},
     cartId: {type: mongoose.Schema.Types.ObjectId , Ref: "Cart"},
     TotalPrice: {type: Number, required: true}
   },

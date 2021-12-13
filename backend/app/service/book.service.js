@@ -13,7 +13,8 @@
 const {
     findBooks,
     count,
-    maxBook
+    maxBook,
+    getBooksBySearch
   } = require("../models/book.model.js");
 
   const {
@@ -24,6 +25,8 @@ const {
   const {
     order
 } = require('../models/order.model.js')
+
+const {postCustomerDetails, getUserDetails} = require('../models/address.model.js')
 
   /**
  * @description find all the books
@@ -55,13 +58,9 @@ const placeOrder = async (orderDetails) => {
   }
 }
 
-const userCart = async (userId) => {
-  try {
-    return await cartDetails(userId)
-  } catch (error) {
-    throw error
-  }
-}
+const userCart = (userId) => {
+    return cartDetails(userId).then(data => data).catch(err=> {throw err})
+};
 
 const countBooks = async () => {
   try {
@@ -71,12 +70,37 @@ const countBooks = async () => {
   }
 }
 
-const limitBooks = async (limit , startIndex) => {
+const limitBooks = async (limit , startIndex, sort) => {
   try {
-    return await maxBook(limit , startIndex)
+    return await maxBook(limit , startIndex, sort)
   } catch (error) {
     throw error
   }
 }
 
-module.exports = {findAllBooks, addCartDetails, placeOrder, userCart, countBooks, limitBooks}
+const searchItems = async (searchTerm) => {
+  try {
+    return await getBooksBySearch(searchTerm)
+  } catch (error) {
+    throw error
+  }
+}
+
+const addUserDetails = async (details) => {
+  try {
+    return await postCustomerDetails(details)
+  } catch (error) {
+    throw error
+  }
+}
+
+const fetchUserDetails = async (userId) => {
+  try {
+    return await getUserDetails(userId)
+  } catch (error) {
+    throw error
+  }
+}
+
+
+module.exports = {findAllBooks, addCartDetails, placeOrder, userCart, countBooks, limitBooks, searchItems, addUserDetails, fetchUserDetails}

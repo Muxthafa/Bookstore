@@ -11,14 +11,13 @@ import {
 function BooksCard({book}) {
     const [wishlist, setWishlist] = useState(false);
     const [cart, setCart] = useState(false);
-
     const handleCart = () => {
         setWishlist(true);
       };
       const handleWishlist = () => {
         setCart(true);
       };
-
+      console.log("book");
     return (
         <Card sx={{ height: 345 }}>
                   <CardMedia

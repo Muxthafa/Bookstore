@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 //creation of schema for cart
 const CartSchema = mongoose.Schema(
   {
-    userId: { type: mongoose.Schema.Types.ObjectId, Ref: "User" },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     items: [
       {
         book: {
@@ -36,12 +36,14 @@ const addCart = async (cartDetails) => {
     quantity: cartDetails.quantity,
     cost: cartDetails.cost,
   };
+  console.log(cartDetails.counter);
   try {
-    let cart = await Cart.findOne({ userId: userId })
-      if (cart) {
-        const product = cart.items.find((item) => item.book == itemList.book);
+    let cart = await Cart.findOne({ userId: userId });
+    if (cart) {
+      const product = cart.items.find((item) => item.book == itemList.book);
 
-        if (product) {
+      if (product) {
+        if(cartDetails.counter == "increment"){
           return await Cart.findOneAndUpdate(
             { userId: userId, "items.book": itemList.book },
             {
@@ -52,38 +54,53 @@ const addCart = async (cartDetails) => {
                 },
               },
             }
-          )
-        } else {
+          );
+        }else{
           return await Cart.findOneAndUpdate(
-            { userId: userId },
+            { userId: userId, "items.book": itemList.book },
             {
-              $push: {
-                items: itemList,
+              $set: {
+                "items.$": {
+                  ...itemList,
+                  quantity: product.quantity - 1,
+                },
               },
             }
-          ).exec()
+          );
         }
+        
       } else {
-        const cart = new Cart({
-          userId: userId,
-          items: [itemList],
-        });
-
-        return cart.save()
+        return await Cart.findOneAndUpdate(
+          { userId: userId },
+          {
+            $push: {
+              items: itemList,
+            },
+          }
+        ).exec();
       }
+    } else {
+      const cart = new Cart({
+        userId: userId,
+        items: [itemList],
+      });
+
+      return cart.save();
+    }
     return cart;
   } catch (error) {
     throw error;
   }
 };
 
-const cartDetails = async (userId) => {
-  try {
-    let data = await Cart.findOne({ userId });
-    return data;
-  } catch (error) {
-    throw error;
-  }
+const cartDetails = (userId) => {
+  return Cart.findOne({ userId: userId })
+    .populate("userId", "firstName")
+    .exec()
+    .then((data) => {
+      return data;
+    })
+    .catch((err) => err);
 };
 
 module.exports = { addCart, cartDetails };

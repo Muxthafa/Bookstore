@@ -1,24 +1,29 @@
 import React, { useEffect } from "react";
 import { Pagination, PaginationItem } from "@mui/material/";
-import Stack from "@mui/material/Stack";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import bookService from "../service/BookService";
 import {setBooks} from "../actions/bookActions.js"
+import '../styles/home.scss'
 
-export default function Paginate({ page }) {
+export default function Paginate({ page, sort }) {
+  const numberOfPages = useSelector((state) => state.allBooks.numberOfPages);
+  const flag = useSelector((state) => state.allBooks.searchFlag);
   const dispatch = useDispatch();
-
   useEffect(() => {
     if (page) {
-      bookService.getBooks(page)
-              .then((res) => dispatch(setBooks(res.data)));
+      bookService.getBooks(page, sort)
+              .then((res) => {
+                console.log(res.data);
+                dispatch(setBooks(res.data))});
     }
-  }, [dispatch, page]);
+  }, [page, sort]);
 
   return (
+    <>
+    {flag == "false" &&
       <Pagination
-        count={5}
+        count={numberOfPages}
         style={{margin:"10px 0px 20px 40%"}}
         page={Number(page) || 1}
         shape="rounded"
@@ -26,9 +31,11 @@ export default function Paginate({ page }) {
           <PaginationItem
             {...item}
             component={Link}
-            to={`/books?page=${item.page}`}
+            to={sort? `/books?page=${item.page}&sort=${sort}` : `/books?page=${item.page}`}
           />
         )}
       />
+        }
+    </>
   );
 }

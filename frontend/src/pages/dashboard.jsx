@@ -14,16 +14,15 @@ function useQuery() {
 }
 
 const Dashboard = () => {
-
   const query = useQuery();
   const page = query.get('page') || 1;
-
+  const sort = query.get('sort');
     return (
       <Box sx={{ display: "flex" }}>
-        <Appbar />
+        <Appbar page={page}/>
         <Box component="main" className="book-container">
-          <Book />
-          <Paginate page={page} />
+          <Book page={page}/>
+          <Paginate page={page} sort={sort} />
         </Box>
       </Box>
     );

@@ -27,4 +27,10 @@ router.get("/cart",authorizeUser, books.getCart)
 
 router.post("/order", authorizeUser, books.createOrder)
 
+router.get("/search", authorizeUser, books.searchBooks)
+
+router.post("/customer-details", authorizeUser, books.addCustomerDetails)
+
+router.get("/customer-details", authorizeUser, books.getCustomerDetails)
+
 module.exports = router; //exports the Router object

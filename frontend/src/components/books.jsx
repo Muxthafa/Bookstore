@@ -11,11 +11,15 @@ import {
     MenuItem,
   } from "@mui/material";
   import React, { useState } from "react";
-  import { useSelector } from "react-redux";
-  import BooksCard from './booksCard' 
+  import { useSelector, useDispatch } from "react-redux";
+  import BooksCard from './booksCard'
+  import {setSort} from "../actions/bookActions.js"
+  import { useHistory } from 'react-router-dom';
   
-  const Book = () => {
+  const Book = ({page}) => {
+    const dispatch = useDispatch()
     const myBooks = useSelector((state) => state.allBooks.books);
+    const history = useHistory();
 
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
@@ -28,10 +32,15 @@ import {
 
     const handleDisplayOrder = (order) => {
       if (order === "low") {
-        myBooks.sort((a, b) => a.price - b.price);
+        history.push(`/books?page=${page}&sort=${order}`);
+        // myBooks.sort((a, b) => a.price - b.price);
         handleClose();
-      } else {
-        myBooks.sort((a, b) => b.price - a.price);
+      } else if (order === "high"){
+        history.push(`/books?page=${page}&sort=${order}`);
+        // myBooks.sort((a, b) => b.price - a.price);
+        handleClose();
+      }else{
+        history.push(`/books?page=${page}`);
         handleClose();
       }
     };
@@ -52,7 +61,7 @@ import {
               aria-expanded={open ? "true" : undefined}
               onClick={handleClick}
             >
-              Sort by price
+              Sort by relevance
             </Button>
             <Menu
               id="basic-menu"
@@ -63,6 +72,7 @@ import {
                 "aria-labelledby": "basic-button",
               }}
             >
+              <MenuItem onClick={() => handleDisplayOrder("")}>Sort by relevance</MenuItem>
               <MenuItem onClick={() => handleDisplayOrder("low")}>price: low to high</MenuItem>
               <MenuItem onClick={() => handleDisplayOrder("high")}>price: high to low</MenuItem>
             </Menu>
