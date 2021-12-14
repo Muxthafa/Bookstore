@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { IconButton, TextField, InputAdornment } from "@mui/material";
+import { IconButton, TextField, InputAdornment, Grid } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useDispatch } from "react-redux";
 import bookService from "../service/BookService";
 import {setSearchedBooks, setSearchFlag} from "../actions/bookActions.js"
 import { useHistory } from 'react-router-dom';
+import '../styles/home.scss'
 
 function Search({page}) {
     const dispatch = useDispatch();
@@ -24,9 +25,7 @@ function Search({page}) {
           if(page){
             dispatch(setSearchFlag("false"))
             history.push(`/books?page=${page}`);
-          }else{
-            history.push('/books');
-          }    
+          }  
       }
       
   }, [search]);
@@ -37,7 +36,7 @@ function Search({page}) {
       id="search-bar"
       variant="outlined"
       onChange={(e) => handleSearch(e.target.value)}
-      style={{ margin: "0px 25% 0px 5%" }}
+      style={{ margin: "0px 17% 0px 5%" }}
       size="small"
       fullWidth
       InputProps={{
@@ -51,6 +50,7 @@ function Search({page}) {
         style: { height: "40px", backgroundColor: "white" },
       }}
     />
+
   );
 }
 

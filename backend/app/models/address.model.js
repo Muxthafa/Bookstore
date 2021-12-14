@@ -48,7 +48,7 @@ const postCustomerDetails = async (details) => {
 const getUserDetails = async (userId) => {
     try {
         // Save user in the database
-        return await Address.find({userId: userId})
+        return await Address.findOne({userId: userId})
       } catch (error) {
         throw error
       }

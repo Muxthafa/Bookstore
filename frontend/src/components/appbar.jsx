@@ -20,7 +20,7 @@ const Appbar = ({page}) => {
   return (
     <AppBar position="fixed">
       <Toolbar>
-        <IconButton style={{ marginLeft: "5%" }} component={Link} to="/dashboard">
+        <IconButton style={{ marginLeft: "5%" }} component={Link} to="/books">
           <ImportContactsIcon fontSize="large" style={{ color: "white" }} />
         </IconButton>
         <Typography variant="h6" id="book-title">

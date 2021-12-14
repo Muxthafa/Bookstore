@@ -25,6 +25,8 @@ router.post("/add-to-cart", authorizeUser, books.addToCart)
 
 router.get("/cart",authorizeUser, books.getCart)
 
+router.delete("/cart/:id", authorizeUser, books.deleteCartProduct)
+
 router.post("/order", authorizeUser, books.createOrder)
 
 router.get("/search", authorizeUser, books.searchBooks)

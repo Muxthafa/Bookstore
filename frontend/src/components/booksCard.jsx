@@ -7,17 +7,33 @@ import {
     CardActions,
     Button,
   } from "@mui/material";
+  import bookService from "../service/BookService";
+  import { useDispatch } from "react-redux";
+  import { setQuantity } from "../actions/bookActions";
 
 function BooksCard({book}) {
     const [wishlist, setWishlist] = useState(false);
     const [cart, setCart] = useState(false);
+    const dispatch = useDispatch()
     const handleCart = () => {
+        let data = {
+          book:book._id,
+          cost:book.price,
+          counter: "increment"
+        }
         setWishlist(true);
+
+        bookService.addCartBooks(data)
+        .then((res)=>{
+          console.log("success");
+        })
+        .catch((err)=>{
+          console.log(err);
+        })
       };
       const handleWishlist = () => {
         setCart(true);
       };
-      console.log("book");
     return (
         <Card sx={{ height: 345 }}>
                   <CardMedia

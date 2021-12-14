@@ -46,7 +46,7 @@ import {
     };
 
     return (
-      <Box className="main-container">
+      <Box className="main-container" >
         <Grid container>
           <Grid item xs={6} align="left">
             <Typography id="book-count">

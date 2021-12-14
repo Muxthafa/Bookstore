@@ -12,11 +12,16 @@ export default function Paginate({ page, sort }) {
   const dispatch = useDispatch();
   useEffect(() => {
     if (page) {
+      
       bookService.getBooks(page, sort)
               .then((res) => {
                 console.log(res.data);
                 dispatch(setBooks(res.data))});
     }
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   }, [page, sort]);
 
   return (

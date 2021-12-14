@@ -8,7 +8,7 @@ const CartSchema = mongoose.Schema(
       {
         book: {
           type: mongoose.Schema.Types.ObjectId,
-          Ref: "Product",
+          ref: "Product",
         },
         quantity: {
           type: Number,
@@ -36,12 +36,10 @@ const addCart = async (cartDetails) => {
     quantity: cartDetails.quantity,
     cost: cartDetails.cost,
   };
-  console.log(cartDetails.counter);
   try {
     let cart = await Cart.findOne({ userId: userId });
     if (cart) {
       const product = cart.items.find((item) => item.book == itemList.book);
-
       if (product) {
         if(cartDetails.counter == "increment"){
           return await Cart.findOneAndUpdate(
@@ -53,7 +51,8 @@ const addCart = async (cartDetails) => {
                   quantity: product.quantity + 1,
                 },
               },
-            }
+            },
+            {new:true}
           );
         }else{
           return await Cart.findOneAndUpdate(
@@ -65,7 +64,8 @@ const addCart = async (cartDetails) => {
                   quantity: product.quantity - 1,
                 },
               },
-            }
+            },
+            {new:true}
           );
         }
         
@@ -93,14 +93,29 @@ const addCart = async (cartDetails) => {
   }
 };
 
-const cartDetails = (userId) => {
-  return Cart.findOne({ userId: userId })
-    .populate("userId", "firstName")
-    .exec()
-    .then((data) => {
-      return data;
-    })
-    .catch((err) => err);
+const cartDetails = async (userId) => {
+  try {
+    let data = await Cart.findOne({ userId }).populate({
+      path: "items.book",
+      select: ["title", "author", "price","image"],
+    });
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  } 
 };
 
-module.exports = { addCart, cartDetails };
+const deleteBookFromCart = async (userId,bookId) => {
+  try {
+    let user = await Cart.findOne({userId: userId})
+    let newItems = user.items.filter((item) => {
+      return item.book != bookId
+    })
+    return await Cart.findOneAndUpdate({userId:userId},{items: newItems},{new:true})
+  } catch (error) {
+    throw error
+  }
+}
+
+module.exports = { addCart, cartDetails, deleteBookFromCart };

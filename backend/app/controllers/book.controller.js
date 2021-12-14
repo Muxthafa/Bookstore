@@ -19,7 +19,8 @@ const {
   limitBooks,
   searchItems,
   addUserDetails,
-  fetchUserDetails
+  fetchUserDetails,
+  deleteProductFromCart
 } = require("../service/book.service.js");
 const logger = require("../../config/logger");
 const { createCustomError } = require("../error-handler/custom-error");
@@ -37,7 +38,6 @@ const findAll = async (req, res, next) => {
   try {
     const total = await countBooks();
     const books = await limitBooks(limit, startIndex, sort);
-    console.log(books);
     return res.status(200).json({ data: books, currentPage: Number(page), numberOfPages: Math.ceil(total / limit)});
   } catch (error) {
     const total = 0;
@@ -83,6 +83,7 @@ const addToCart = async (req, res, next) => {
     cost: req.body.cost,
     counter: req.body.counter
   };
+
   try {
     let data = await addCartDetails(cartDetails);
     return res.status(200).json(data);
@@ -116,10 +117,13 @@ const searchBooks = async (req, res, next) => {
   }
 };
 
-const getCart = (req, res) => {
-  return userCart(req.body.userId)
-    .then((data) => res.status(200).send(data))
-    .catch((err) => err);
+const getCart = async (req, res) => {
+  try {
+    let data =  await userCart(req.body.userId)
+    return res.status(200).send(data)
+  } catch (error) {
+    return res.status(200).send(error)
+  }
 };
 
 const addCustomerDetails = async (req,res,next) => {
@@ -134,7 +138,7 @@ const addCustomerDetails = async (req,res,next) => {
     landmark: req.body.landmark,
     addressType: req.body.addressType
   }
-
+  console.log(details);
   try {
     let data = await addUserDetails(details)
     return res.status(200).json(data);
@@ -148,10 +152,23 @@ const getCustomerDetails = async (req, res, next) => {
 
   try {
     let data = await fetchUserDetails(userId);
+    if(!data){
+      throw "no data found"
+    }
     return res.status(200).json(data);
   } catch (error) {
     return res.status(500).json(error);
   }
 };
 
-module.exports = { findAll, addToCart, createOrder, getCart, searchBooks, addCustomerDetails, getCustomerDetails};
+const deleteCartProduct = async (req, res, next) => {
+
+  try {
+    let data = await deleteProductFromCart(req.body.userId,req.params.id);
+    return res.status(200).json(data);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+};
+
+module.exports = { findAll, addToCart, createOrder, getCart, searchBooks, addCustomerDetails, getCustomerDetails, deleteCartProduct};

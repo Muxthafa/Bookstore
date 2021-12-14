@@ -1,7 +1,8 @@
 const initialState = {
   books: [],
   searchFlag: "false",
-  sort: ""
+  sort: "",
+  cart: []
 };
 
 export const bookReducer = (state = initialState, { type, payload }) => {
@@ -14,6 +15,25 @@ export const bookReducer = (state = initialState, { type, payload }) => {
       return { ...state, searchFlag: payload };
     case "SET_SORT":
       return { ...state, sort: payload};
+    case "SET_CART":
+      return { ...state, cart:payload}
+    case "SET_QUANTITY":
+      let updatedCartQuantity = state.cart.map((item)=>{
+        if( item.book._id === payload.book){
+          item.quantity = payload.quantity
+        }
+        return item
+      });
+      return { ...state, cart: updatedCartQuantity };
+    case "SET_REMOVE_BOOK":
+      console.log(payload);
+      let updatedCart = state.cart.filter(
+        (item) => {
+          console.log(item.book._id, payload);
+          return item.book._id !== payload
+        }
+      );
+      return { ...state, cart: updatedCart };
     default:
       return state;
   }

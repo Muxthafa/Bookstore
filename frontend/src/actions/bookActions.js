@@ -25,3 +25,24 @@ export const setBooks = (Books) => {
       payload: order,
     };
   }
+
+  export const setCartBooks = (data) =>{
+    return {
+      type: "SET_CART",
+      payload: data,
+    };
+  }
+
+  export const setQuantity = (data) =>{
+    return {
+      type: "SET_QUANTITY",
+      payload: data,
+    };
+  }
+
+  export const setDeleteCart = (data) => {
+    return {
+      type: "SET_REMOVE_BOOK",
+      payload: data,
+    };
+  }

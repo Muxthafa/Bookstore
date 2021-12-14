@@ -19,7 +19,8 @@ const {
 
   const {
       addCart,
-      cartDetails
+      cartDetails,
+      deleteBookFromCart
   } = require('../models/cart.model.js')
 
   const {
@@ -42,7 +43,6 @@ const findAllBooks = (callback) => {
 const addCartDetails = async (cartDetails) => {
     try{
         let data = await addCart(cartDetails)
-        console.log(data);
         return data
     }catch(error){
         throw error
@@ -58,8 +58,12 @@ const placeOrder = async (orderDetails) => {
   }
 }
 
-const userCart = (userId) => {
-    return cartDetails(userId).then(data => data).catch(err=> {throw err})
+const userCart = async (userId) => {
+    try {
+      return await cartDetails(userId)
+    } catch (error) {
+      throw error
+    }
 };
 
 const countBooks = async () => {
@@ -102,5 +106,13 @@ const fetchUserDetails = async (userId) => {
   }
 }
 
+const deleteProductFromCart = async (userId,book) => {
+  try {
+    return await deleteBookFromCart(userId,book)
+  } catch (error) {
+    throw error
+  }
+}
 
-module.exports = {findAllBooks, addCartDetails, placeOrder, userCart, countBooks, limitBooks, searchItems, addUserDetails, fetchUserDetails}
+
+module.exports = {findAllBooks, addCartDetails, placeOrder, userCart, countBooks, limitBooks, searchItems, addUserDetails, fetchUserDetails, deleteProductFromCart}
