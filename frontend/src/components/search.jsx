@@ -36,7 +36,7 @@ function Search({page}) {
       id="search-bar"
       variant="outlined"
       onChange={(e) => handleSearch(e.target.value)}
-      style={{ margin: "0px 17% 0px 5%" }}
+      style={{ margin: "0px 25% 0px 5%" }}
       size="small"
       fullWidth
       InputProps={{

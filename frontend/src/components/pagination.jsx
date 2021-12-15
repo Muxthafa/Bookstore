@@ -5,14 +5,22 @@ import { Link } from "react-router-dom";
 import bookService from "../service/BookService";
 import {setBooks} from "../actions/bookActions.js"
 import '../styles/home.scss'
+import { makeStyles } from "@material-ui/styles";
+
+const useStyles = makeStyles({
+  btn: {
+    color: "#A03037",
+  },
+})
 
 export default function Paginate({ page, sort }) {
+  const classes = useStyles();
+
   const numberOfPages = useSelector((state) => state.allBooks.numberOfPages);
   const flag = useSelector((state) => state.allBooks.searchFlag);
   const dispatch = useDispatch();
   useEffect(() => {
-    if (page) {
-      
+    if (page) { 
       bookService.getBooks(page, sort)
               .then((res) => {
                 console.log(res.data);
@@ -27,19 +35,20 @@ export default function Paginate({ page, sort }) {
   return (
     <>
     {flag == "false" &&
+    <div id="pagination">
       <Pagination
         count={numberOfPages}
-        style={{margin:"10px 0px 20px 40%"}}
         page={Number(page) || 1}
         shape="rounded"
         renderItem={(item) => (
           <PaginationItem
             {...item}
+            className={classes.btn}
             component={Link}
             to={sort? `/books?page=${item.page}&sort=${sort}` : `/books?page=${item.page}`}
           />
         )}
-      />
+      /></div>
         }
     </>
   );

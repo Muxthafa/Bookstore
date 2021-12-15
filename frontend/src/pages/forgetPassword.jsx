@@ -16,18 +16,19 @@ import api from "../service/UserService";
 
 const useStyles = makeStyles({
   btn: {
-    color: "#4285F4",
+    color: "#A03037",
     marginTop: "20px",
     textTransform: "none",
   },
   signInButton: {
-    color: "#4285F4",
+    color: "#A03037",
     marginTop: "20px",
     textTransform: "none",
     marginRight: "200px",
   },
   submitButton: {
-    background: "#4285F4",
+    color: "#ffff",
+    background: "#A03037",
     margin: "30px 0px 20px",
   },
 });
@@ -55,21 +56,13 @@ const ForgotPassword = () => {
   };
   return (
     <form onSubmit={handleSubmit}>
-      <Paper elevation={10} className="paperLogin">
+      <Paper elevation={7} className="paperLogin">
         <Grid container className="gridPad">
           <Grid item container xs={12}>
             <div className="divTitleLogin">
-              <span style={{ color: "blue" }}>F</span>
-              <span style={{ color: "red" }}>u</span>
-              <span style={{ color: "yellow" }}>n</span>
-              <span style={{ color: "blue" }}>d</span>
-              <span style={{ color: "green" }}>o</span>
-              <span style={{ color: "red" }}>o</span>
-              <span style={{ color: "blue" }}>N</span>
-              <span style={{ color: "orange" }}>o</span>
-              <span style={{ color: "indigo" }}>t</span>
-              <span style={{ color: "red" }}>e</span>
-              <span style={{ color: "yellow" }}>s</span>
+            <span style={{ color: "#A03037", letterSpacing: "3px" }}>
+                Bookstore
+              </span>
             </div>
 
             <Typography variant="h5" style={{ margin: "17px 0px 0px 126px" }}>

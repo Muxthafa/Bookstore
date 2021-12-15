@@ -46,7 +46,7 @@ import {
     };
 
     return (
-      <Box className="main-container" >
+      <Box className="book-item" >
         <Grid container>
           <Grid item xs={6} align="left">
             <Typography id="book-count">
@@ -78,7 +78,6 @@ import {
             </Menu>
           </Grid>
         </Grid>
-  
         <Grid container spacing={4}>
           {myBooks.map((book, index) => {
             return (

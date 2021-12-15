@@ -16,18 +16,19 @@ import api from "../service/UserService";
 
 const useStyles = makeStyles({
   btn: {
-    color: "#4285F4",
+    color: "#A03037",
     marginTop: "20px",
     textTransform: "none",
   },
   signInButton: {
-    color: "#4285F4",
+    color: "#A03037",
     marginTop: "20px",
     textTransform: "none",
     marginRight: "200px",
   },
   submitButton: {
-    background: "#4285F4",
+    color: "#ffff",
+    background: "#A03037",
     margin: "30px 0px 20px",
   },
 });

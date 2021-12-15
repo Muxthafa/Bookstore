@@ -22,6 +22,11 @@
     padding: 3;
     margin-top: 70px;
   }
+
+  .book-item {
+    margin: 3% auto 2% auto;
+    width: 85%;
+  }
   
   #book-count {
     font-size: 25px;
@@ -45,6 +50,32 @@
   width: 60%;
   margin: 3% auto 1% auto;
   padding: 1%;
+}
+
+.imageContainer {
+  background-color: #F5F5F5;
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.bookImage {
+  width: 90px;
+}
+
+#pagination {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+#bookTitle {
+  font-size: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
 
 @media screen and (max-width: 500px) {

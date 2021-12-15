@@ -11,12 +11,12 @@ class CustomError extends Error {
 
 /**
  * @description method with parameters overrites the Error class message
- * @param {Object} message 
- * @param {integer} statusCode 
- * @returns 
+ * @param {Object} message
+ * @param {integer} statusCode
+ * @returns
  */
 const createCustomError = (message, statusCode) => {
   return new CustomError(message, statusCode);
 };
 
-module.exports = {createCustomError, CustomError };
+module.exports = { createCustomError, CustomError };

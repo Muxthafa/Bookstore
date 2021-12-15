@@ -1,13 +1,13 @@
 /* ************************************************************************
  * Execution        : 1. default node       cmd> nodemon server.js
- * 
- * @description     : get the request, response object from user routes               
- * 
+ *
+ * @description     : get the request, response object from user routes
+ *
  * @file            : user.controller.js
  * @author          : Mohammad Musthafa
  * @version         : 1.0
  * @since           : 7-Oct-2021
- * 
+ *
  **************************************************************************/
 
 const {
@@ -57,12 +57,12 @@ const create = (req, res, next) => {
       return next(
         createCustomError("Error occurred while creating the User.", 401)
       );
-      logger.info(`Created a new user ${data._id}`);
+    logger.info(`Created a new user ${data._id}`);
     return res.status(200).json({
       message: `created user ${data.firstName} successfully`,
       request: {
         type: "POST",
-        url: "http://localhost:3000/users/"
+        url: "http://localhost:3000/users/",
       },
     });
   });
@@ -130,7 +130,7 @@ const findOne = (req, res, next) => {
         message: "no data found",
       });
     }
-    logger.info(`responded with the details of user ${data._id}`)
+    logger.info(`responded with the details of user ${data._id}`);
     res.status(200).send({ User: data });
   });
 };
@@ -164,8 +164,8 @@ const update = (req, res, next) => {
         message: "no data found",
       });
     }
-    logger.info(`Updated the user ${data._id}`)
-    res.status(200).send({ Message: "User updated successfully",User: data });
+    logger.info(`Updated the user ${data._id}`);
+    res.status(200).send({ Message: "User updated successfully", User: data });
   });
 };
 
@@ -188,8 +188,10 @@ const deleteOne = (req, res, next) => {
         message: "no data found",
       });
     }
-    logger.info(`deleted the user ${data._id}`)
-    res.status(200).send({ message: "User deleted successfully", User: data.name });
+    logger.info(`deleted the user ${data._id}`);
+    res
+      .status(200)
+      .send({ message: "User deleted successfully", User: data.name });
   });
 };
 
@@ -217,18 +219,18 @@ const forgotUserPassword = (req, res, next) => {
  * @param {Object} req
  * @param {Object} res
  */
-const resetUserPassword = (req, res,next) => {
+const resetUserPassword = (req, res, next) => {
   let token = req.params.token;
   let password = req.body.password;
 
   resetPassword(token, password)
     .then((data) => {
-      res.status(200).json({ message: "Password updated successfully", "Result:": data });
+      res
+        .status(200)
+        .json({ message: "Password updated successfully", "Result:": data });
     })
     .catch((err) => {
-      return next(
-        createCustomError("Error while changing the password", 401)
-      );
+      return next(createCustomError("Error while changing the password", 401));
     });
 };
 

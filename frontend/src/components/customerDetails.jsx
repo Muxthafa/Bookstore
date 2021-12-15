@@ -26,7 +26,7 @@ const CustomerAddress = () => {
     address: "",
     city: "",
     landmark: "",
-    addressType: "",
+    addressType: "Home",
   };
   const [details, setDetails] = useState(initialCustomerState);
 

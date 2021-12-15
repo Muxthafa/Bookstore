@@ -10,28 +10,32 @@ import {
   TextField,
 } from "@material-ui/core";
 
-import { Link , Redirect} from "react-router-dom";
-import image from "../assets/google_image.svg";
+import { Link, Redirect } from "react-router-dom";
+import image from "../assets/store.png";
 import "../css/style.css";
 import { makeStyles } from "@material-ui/styles";
 import api from "../service/UserService";
+import ImportContactsIcon from "@mui/icons-material/ImportContacts";
 
 const useStyles = makeStyles({
   btn: {
-    color: "#4285F4",
+    color: "#A03037",
     marginTop: "20px",
     textTransform: "none",
+    fontWeight: "550",
   },
   signInButton: {
-    color: "#4285F4",
+    color: "#A03037",
     marginTop: "33px",
     textTransform: "none",
     marginRight: "200px",
-    textDecoration: "none"
+    textDecoration: "none",
+    fontWeight: "550",
   },
 
   submitButton: {
-    background: "#4285F4",
+    color: "#ffff",
+    background: "#A03037",
     margin: "30px 0px 20px",
   },
 });
@@ -60,9 +64,9 @@ const Registration = () => {
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [confirmError, setPasswordConfirmError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(errorMessages)
+  const [errorMessage, setErrorMessage] = useState(errorMessages);
   const [showPassword, setShowPassword] = useState(false);
-  const [redirect, setRedirect] = useState(false)
+  const [redirect, setRedirect] = useState(false);
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -82,46 +86,46 @@ const Registration = () => {
     if (userState.firstName === "") {
       setFirstNameError(true);
       setErrorMessage((prev) => {
-        return {...prev, firstNameErrorMsg:"First name cannot be empty"}
-      })
+        return { ...prev, firstNameErrorMsg: "First name cannot be empty" };
+      });
       flagError = true;
     }
     if (userState.lastName === "") {
       setLastNameError(true);
       setErrorMessage((prev) => {
-        return {...prev, lastNameErrorMsg:"Last name cannot be empty"}
-      })
+        return { ...prev, lastNameErrorMsg: "Last name cannot be empty" };
+      });
       flagError = true;
     }
     if (!pattern.test(userState.email)) {
       setEmailError(true);
       setErrorMessage((prev) => {
-        return {...prev, emailErrorMsg:"Email format does not match"}
-      })
+        return { ...prev, emailErrorMsg: "Email format does not match" };
+      });
       flagError = true;
     }
     if (userState.email === "") {
       setEmailError(true);
       setErrorMessage((prev) => {
-        return {...prev, emailErrorMsg:"Email cannot be empty"}
-      })
+        return { ...prev, emailErrorMsg: "Email cannot be empty" };
+      });
       flagError = true;
     }
     if (userState.password === "") {
       setPasswordError(true);
       setErrorMessage((prev) => {
-        return {...prev, passwordErrorMsg:"password cannot be empty"}
-      })
+        return { ...prev, passwordErrorMsg: "password cannot be empty" };
+      });
       flagError = true;
     }
     if (userState.password !== userState.confirmPass) {
       setPasswordConfirmError(true);
       setErrorMessage((prev) => {
-        return {...prev, passwordErrorMsg:"password mismatch"}
-      })
+        return { ...prev, passwordErrorMsg: "password mismatch" };
+      });
       flagError = true;
     }
-    
+
     if (flagError) {
       return false;
     } else {
@@ -137,17 +141,18 @@ const Registration = () => {
     setEmailError(false);
     setPasswordError(false);
     setPasswordConfirmError(false);
-    if (validate()) {  
+    if (validate()) {
       let data = {
         firstName: userState.firstName,
         lastName: userState.lastName,
         email: userState.email,
         password: userState.password,
       };
-      api.userRegister(data)
+      api
+        .userRegister(data)
         .then((res) => {
           console.log(res);
-          setRedirect(true)
+          setRedirect(true);
         })
         .catch((err) => console.log(err));
     } else {
@@ -157,21 +162,13 @@ const Registration = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Paper elevation={10} className="paperReg">
+      <Paper elevation={5} className="paperReg">
         <Grid container className="gridPad">
-          <Grid item container xs={8} spacing={2}>
+          <Grid item container xs={8} spacing={4}>
             <div className="divTitle">
-              <span style={{ color: "blue" }}>F</span>
-              <span style={{ color: "red" }}>u</span>
-              <span style={{ color: "yellow" }}>n</span>
-              <span style={{ color: "blue" }}>d</span>
-              <span style={{ color: "green" }}>o</span>
-              <span style={{ color: "red" }}>o</span>
-              <span style={{ color: "blue" }}>N</span>
-              <span style={{ color: "orange" }}>o</span>
-              <span style={{ color: "indigo" }}>t</span>
-              <span style={{ color: "red" }}>e</span>
-              <span style={{ color: "yellow" }}>s</span>
+              <span style={{ color: "#A03037", letterSpacing: "3px" }}>
+                Bookstore
+              </span>
             </div>
             <Typography variant="body1" style={{ marginTop: "17px" }}>
               Create your fundooNotes Account
@@ -185,6 +182,7 @@ const Registration = () => {
                 size="small"
                 helperText={firstNameError && errorMessage.firstNameErrorMsg}
                 name="firstName"
+                style={{ marginRight: "10px" }}
                 value={userState.firstName}
                 onChange={handleUserState}
               />
@@ -224,14 +222,12 @@ const Registration = () => {
                 label="Password"
                 variant="outlined"
                 size="small"
+                style={{ marginRight: "10px" }}
                 type={showPassword ? "text" : "password"}
                 name="password"
                 value={userState.password}
                 onChange={handleUserState}
-                helperText={
-                  passwordError
-                    && errorMessage.passwordErrorMsg
-                }
+                helperText={passwordError && errorMessage.passwordErrorMsg}
               />
               <TextField
                 error={confirmError}
@@ -245,18 +241,18 @@ const Registration = () => {
                 helperText={confirmError && errorMessage.passwordErrorMsg}
               />
             </div>
-            
+
             <FormControlLabel
               control={<Checkbox />}
               label="Show password"
               style={{ marginTop: "20px" }}
               onClick={handleClickShowPassword}
             ></FormControlLabel>
-            
+
             <Link to="/login" className={classes.signInButton}>
-            Sign in instead
+              Sign in instead
             </Link>
-            
+
             <Button
               type="submit"
               variant="contained"
@@ -266,11 +262,11 @@ const Registration = () => {
             </Button>
           </Grid>
           <Grid item container xs={4}>
-            <img src={image} alt="" />
+              <ImportContactsIcon  style={{ color: "#A03037", margin: "100px 0px 0px 50px",fontSize: "200px" }} />
           </Grid>
         </Grid>
       </Paper>
-      {redirect? <Redirect to="/login" /> : null}
+      {redirect ? <Redirect to="/login" /> : null}
     </form>
   );
 };

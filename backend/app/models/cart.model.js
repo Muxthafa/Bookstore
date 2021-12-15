@@ -1,3 +1,15 @@
+/* ************************************************************************
+ * Execution        : 1. default node       cmd> nodemon index.js
+ *
+ * @description     : Get the values from the service and process them for the Cart model in Bookstore
+ *
+ * @file            : cart.models.js
+ * @author          : Mohammad Musthafa
+ * @version         : 1.0
+ * @since           : 8-Dec-2021
+ *
+ **************************************************************************/
+
 const mongoose = require("mongoose");
 
 //creation of schema for cart
@@ -29,6 +41,11 @@ const CartSchema = mongoose.Schema(
 
 const Cart = mongoose.model("Cart", CartSchema);
 
+/**
+ * @description Query to create a cart, if the same product exists in cart it updates the quantity or else adds new product to the cart
+ * @param {Object} cartDetails
+ * @returns error or cart data
+ */
 const addCart = async (cartDetails) => {
   let userId = cartDetails.userId;
   let itemList = {
@@ -41,7 +58,7 @@ const addCart = async (cartDetails) => {
     if (cart) {
       const product = cart.items.find((item) => item.book == itemList.book);
       if (product) {
-        if(cartDetails.counter == "increment"){
+        if (cartDetails.counter == "increment") {
           return await Cart.findOneAndUpdate(
             { userId: userId, "items.book": itemList.book },
             {
@@ -52,9 +69,9 @@ const addCart = async (cartDetails) => {
                 },
               },
             },
-            {new:true}
+            { new: true }
           );
-        }else{
+        } else {
           return await Cart.findOneAndUpdate(
             { userId: userId, "items.book": itemList.book },
             {
@@ -65,10 +82,9 @@ const addCart = async (cartDetails) => {
                 },
               },
             },
-            {new:true}
+            { new: true }
           );
         }
-        
       } else {
         return await Cart.findOneAndUpdate(
           { userId: userId },
@@ -93,29 +109,44 @@ const addCart = async (cartDetails) => {
   }
 };
 
+/**
+ * @description Query to fetch cart details of the user from db
+ * @param userId
+ * @returns error or cart&book details
+ */
 const cartDetails = async (userId) => {
   try {
     let data = await Cart.findOne({ userId }).populate({
       path: "items.book",
-      select: ["title", "author", "price","image"],
+      select: ["title", "author", "price", "image"],
     });
     return data;
   } catch (error) {
     console.log(error);
     throw error;
-  } 
+  }
 };
 
-const deleteBookFromCart = async (userId,bookId) => {
+/**
+ * @description Query to delete a book from the book array in the cart
+ * @param userId
+ * @param bookId
+ * @returns error or cart&book details
+ */
+const deleteBookFromCart = async (userId, bookId) => {
   try {
-    let user = await Cart.findOne({userId: userId})
+    let user = await Cart.findOne({ userId: userId });
     let newItems = user.items.filter((item) => {
-      return item.book != bookId
-    })
-    return await Cart.findOneAndUpdate({userId:userId},{items: newItems},{new:true})
+      return item.book != bookId;
+    });
+    return await Cart.findOneAndUpdate(
+      { userId: userId },
+      { items: newItems },
+      { new: true }
+    );
   } catch (error) {
-    throw error
+    throw error;
   }
-}
+};
 
 module.exports = { addCart, cartDetails, deleteBookFromCart };

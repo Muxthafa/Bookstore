@@ -5,7 +5,7 @@ import { Box } from "@mui/system";
 import bookService from "../service/BookService";
 import {setBooks} from "../actions/bookActions.js"
 import Pagination from '../components/pagination.jsx'
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation, Redirect} from 'react-router-dom';
 import Paginate from "../components/pagination.jsx";
 
 function useQuery() {
@@ -13,9 +13,15 @@ function useQuery() {
 }
 
 const Dashboard = () => {
+  
+  let token = sessionStorage.getItem('token')
   const query = useQuery();
   const page = query.get('page') || 1;
   const sort = query.get('sort');
+
+  if (token == null) {
+    return <>{<Redirect to="/login" />}</>;
+  } else {
     return (
       <Box sx={{ display: "flex" }}>
         <Appbar page={page}/>
@@ -25,6 +31,7 @@ const Dashboard = () => {
         </Box>
       </Box>
     );
+  }
 };
 
 export default Dashboard;

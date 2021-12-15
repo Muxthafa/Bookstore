@@ -5,6 +5,7 @@ import ResetPassword from "./pages/resetPassword.jsx";
 import Error from "./pages/Error.jsx"
 import Dashboard from "./pages/dashboard.jsx"
 import Cart from './pages/cart.jsx'
+import Order from './pages/order.jsx'
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -20,6 +21,7 @@ export default function Routers() {
           <Route path="/reset/:token" component={ResetPassword} />
           <Route path="/books" component={Dashboard} />
           <Route path='/cart' component={Cart} />
+          <Route path='/order' component={Order} />
           <Route path="*" component={Error} />
         </Switch>
       </Router>

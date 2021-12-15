@@ -19,6 +19,7 @@ const Cart = () => {
       .catch((err) => {
         console.log(err);
       });
+
   }, []);
 
   if (token == null) {

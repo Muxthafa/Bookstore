@@ -12,9 +12,11 @@ import {
   import CartCard from "./cartCard";
   import CustomerAddress from "./customerDetails";
   import "../styles/home.scss"
+  import { Link } from "react-router-dom";
 
   const AddCart = () => {
     let total = 0;
+    let newPrice = 0;
     let numberOfBooks = 0;
     const myBooks = useSelector((state) => state.allBooks.cart);
 
@@ -40,7 +42,8 @@ import {
           </Grid>
         </Grid>
         <CustomerAddress />
-        {/* <Grid
+        
+        <Grid
           item
           container
           style={{
@@ -66,17 +69,17 @@ import {
                   return <CartCard item={item} key={index} />;
                 })}
   
-                <Grid item xs={11} align="left" style={{ marginLeft: "35%" }}>
-                  <Typography>Number of books : {numberOfBooks}</Typography>
-                  <Typography>Total Price : {total}</Typography>
+                <Grid item xs={11} align="left" style={{ margin: "5% 0% 0% 35%" }}>
+                  <Typography variant="h6">Number of books : {numberOfBooks}</Typography>
+                  <Typography variant="h6">Total Price : {total}</Typography>
                 </Grid>
                 <Grid item xs={12} align="right">
-                  <Button variant="contained">checkout</Button>
+                  <Button variant="contained" component={Link} to="/order">checkout</Button>
                 </Grid>
               </AccordionDetails>
             </Accordion>
           </Grid>
-        </Grid> */}
+        </Grid>
       </Grid>
     );
   };

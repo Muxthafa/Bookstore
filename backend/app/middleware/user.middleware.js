@@ -1,13 +1,13 @@
 /* ************************************************************************
  * Execution        : 1. default node       cmd> nodemon server.js
- * 
- * @description     : Receives data from previous middleware in the user routes                
- * 
+ *
+ * @description     : Receives data from previous middleware in the user routes
+ *
  * @file            : user.middleware.js
  * @author          : Mohammad Musthafa
  * @version         : 1.0
  * @since           : 7-Oct-2021
- * 
+ *
  **************************************************************************/
 
 const { verifyToken } = require("../utility/user.jwt");
@@ -49,8 +49,6 @@ const validateUser = (req, res, next) => {
   next();
 };
 
-
-
 /**
  * @description function to verify user for authentication
  * @param {Object} req
@@ -58,25 +56,21 @@ const validateUser = (req, res, next) => {
  * @param {Object} next
  * @returns
  */
- const authorizeUser = (req, res, next) => {
-    const headerAuth = req.headers.authorization || req.headers.token;
-    if (!headerAuth) return res.status(500).send({ message: "Not authorized" });
-    // const token = headerAuth.split(" ")[1];
-    const token = headerAuth
-    verifyToken(token, (error, data) => {
-      if (error){
-        return next(
-          createCustomError(
-            "Error occurred while authenticating the user",
-            500
-          )
-        );
-      }  
-      else{
-        req.body.userId = data._id
-        next()
-      }
-    });
-  };
-  
-  module.exports = { validateUser, authorizeUser };
+const authorizeUser = (req, res, next) => {
+  const headerAuth = req.headers.authorization || req.headers.token;
+  if (!headerAuth) return res.status(500).send({ message: "Not authorized" });
+  // const token = headerAuth.split(" ")[1];
+  const token = headerAuth;
+  verifyToken(token, (error, data) => {
+    if (error) {
+      return next(
+        createCustomError("Error occurred while authenticating the user", 500)
+      );
+    } else {
+      req.body.userId = data._id;
+      next();
+    }
+  });
+};
+
+module.exports = { validateUser, authorizeUser };
