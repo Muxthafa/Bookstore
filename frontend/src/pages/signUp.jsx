@@ -262,7 +262,13 @@ const Registration = () => {
             </Button>
           </Grid>
           <Grid item container xs={4}>
-              <ImportContactsIcon  style={{ color: "#A03037", margin: "100px 0px 0px 50px",fontSize: "200px" }} />
+            <ImportContactsIcon
+              style={{
+                color: "#A03037",
+                margin: "100px 0px 0px 50px",
+                fontSize: "200px",
+              }}
+            />
           </Grid>
         </Grid>
       </Paper>

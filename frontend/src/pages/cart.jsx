@@ -1,4 +1,4 @@
-import React, { useEffect} from "react";
+import React, { useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import AddCart from "../components/addCart";
 import Appbar from "../components/appbar";
@@ -14,12 +14,11 @@ const Cart = () => {
     bookService
       .getCartBooks(token)
       .then((res) => {
-          dispatch(setCartBooks(res.data.items));
+        dispatch(setCartBooks(res.data.items));
       })
       .catch((err) => {
         console.log(err);
       });
-
   }, []);
 
   if (token == null) {
@@ -29,7 +28,7 @@ const Cart = () => {
       <Box sx={{ display: "flex" }}>
         <Appbar />
         <Box component="main" className="book-container">
-         <AddCart />
+          <AddCart />
         </Box>
       </Box>
     );

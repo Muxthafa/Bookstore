@@ -40,14 +40,15 @@ const ForgotPassword = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(email === ""){
+    if (email === "") {
       console.log("email must be filled");
-    }else{
+    } else {
       console.log("Valid");
       let data = {
-        email
-      }
-      api.forgetPassword(data)
+        email,
+      };
+      api
+        .forgetPassword(data)
         .then((res) => {
           console.log(res);
         })
@@ -60,13 +61,13 @@ const ForgotPassword = () => {
         <Grid container className="gridPad">
           <Grid item container xs={12}>
             <div className="divTitleLogin">
-            <span style={{ color: "#A03037", letterSpacing: "3px" }}>
+              <span style={{ color: "#A03037", letterSpacing: "3px" }}>
                 Bookstore
               </span>
             </div>
 
             <Typography variant="h5" style={{ margin: "17px 0px 0px 126px" }}>
-            Enter your email ID
+              Enter your email ID
             </Typography>
 
             <TextField

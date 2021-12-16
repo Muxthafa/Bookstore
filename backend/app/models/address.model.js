@@ -23,7 +23,11 @@ const AddressSchema = mongoose.Schema(
     address: { type: String, required: true },
     city: { type: String, required: true },
     landmark: { type: String, required: true },
-    addressType: {type: String, enum: ["Home", "Work", "Other"], required: true}
+    addressType: {
+      type: String,
+      enum: ["Home", "Work", "Other"],
+      required: true,
+    },
   },
   {
     timestamps: true,
@@ -31,7 +35,6 @@ const AddressSchema = mongoose.Schema(
 );
 
 const Address = mongoose.model("Address", AddressSchema);
-
 
 /**
  * @description Query to create a Customer address, if an user address already exists it updates
@@ -48,20 +51,21 @@ const postCustomerDetails = async (details) => {
     address: details.address,
     city: details.city,
     landmark: details.landmark,
-    addressType: details.addressType
+    addressType: details.addressType,
   });
 
   try {
-    let user = await Address.findOne({userId: details.userId})
-    if(!user){
-      return await address.save({})
+    let user = await Address.findOne({ userId: details.userId });
+    if (!user) {
+      return await address.save();
     }
-    return await Address.findOneAndUpdate({userId: details.userId}, details, {new:true})
+    return await Address.findOneAndUpdate({ userId: details.userId }, details, {
+      new: true,
+    });
   } catch (error) {
-    throw error
+    throw error;
   }
 };
-
 
 /**
  * @description Query to fetch the customer address details from the db
@@ -69,11 +73,11 @@ const postCustomerDetails = async (details) => {
  * @returns error or data
  */
 const getUserDetails = async (userId) => {
-    try {
-        return await Address.findOne({userId: userId})
-      } catch (error) {
-        throw error
-      }
-}
+  try {
+    return await Address.findOne({ userId: userId });
+  } catch (error) {
+    throw error;
+  }
+};
 
-module.exports = { postCustomerDetails, getUserDetails};
+module.exports = { postCustomerDetails, getUserDetails };

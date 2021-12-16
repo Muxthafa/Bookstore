@@ -36,7 +36,7 @@ function BooksCard({ book }) {
     setCart(true);
   };
   return (
-    <Card sx={{ height: 345 }}>
+    <Card sx={{ height: 345 }} elevation={3}>
       <div className="imageContainer">
         <img className="bookImage" src={book.image} alt="" />
       </div>

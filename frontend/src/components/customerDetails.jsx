@@ -15,9 +15,13 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import bookService from "../service/BookService";
-import '../styles/home.scss'
+import "../styles/home.scss";
 
-const CustomerAddress = () => {
+const CustomerAddress = ({
+  expanded,
+  handleExpanded,
+  handleExpandedSummary,
+}) => {
   const initialCustomerState = {
     name: "",
     phone: "",
@@ -40,7 +44,7 @@ const CustomerAddress = () => {
     bookService
       .getCustomerDetails()
       .then((res) => {
-        setDetails(res.data)
+        setDetails(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -48,6 +52,8 @@ const CustomerAddress = () => {
   }, []);
 
   const handleUpdate = () => {
+    handleExpanded();
+    handleExpandedSummary();
     bookService
       .addCustomerDetails(details)
       .then((res) => {
@@ -59,13 +65,9 @@ const CustomerAddress = () => {
   };
 
   return (
-    <Grid
-      item
-      container
-      id="cartContainer"
-    >
+    <Grid item container id="cartContainer">
       <Grid item xs={12}>
-        <Accordion elevation={0}>
+        <Accordion elevation={0} expanded={expanded} onChange={handleExpanded}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1a-content"
@@ -201,7 +203,9 @@ const CustomerAddress = () => {
               </Grid>
             </Grid>
             <Grid item xs={12} align="right">
-              <Button variant="contained" onClick={handleUpdate}>Continue</Button>
+              <Button variant="contained" onClick={handleUpdate}>
+                Continue
+              </Button>
             </Grid>
           </AccordionDetails>
         </Accordion>
@@ -209,4 +213,4 @@ const CustomerAddress = () => {
     </Grid>
   );
 };
-export default CustomerAddress
+export default CustomerAddress;

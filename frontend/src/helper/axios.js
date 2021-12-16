@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from "axios";
 
 let post = (reqObj) => {
   return axios({
@@ -6,11 +6,13 @@ let post = (reqObj) => {
     url: reqObj.URL,
     headers: reqObj.headers,
     data: reqObj.data,
-  }).then((res) => {
-    return res
-  }).catch((err) => {
-    throw err
   })
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      throw err;
+    });
 };
 
 let get = (reqObj) => {
@@ -18,12 +20,13 @@ let get = (reqObj) => {
     method: reqObj.method,
     url: reqObj.URL,
     headers: reqObj.headers,
-  }).then((res) => {
-    return res
-  }).catch((err) => {
-    throw err
   })
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      throw err;
+    });
 };
 
-export default {post, get}
-
+export default { post, get };

@@ -20,6 +20,7 @@ const {
   addUserDetails,
   fetchUserDetails,
   deleteProductFromCart,
+  deleteCart
 } = require("../service/book.service.js");
 const logger = require("../../config/logger");
 const { createCustomError } = require("../error-handler/custom-error");
@@ -222,16 +223,34 @@ const deleteCartProduct = async (req, res, next) => {
  * @param {Object} next
  */
 const createOrder = async (req, res, next) => {
-  let orderDetails = {
-    userId: req.body.userId,
-    cartId: req.body.cartId,
-    amount: req.body.amount,
-  };
   try {
-    let data = await placeOrder(orderDetails);
+    let data = await placeOrder(req.body);
+    logger.info("create order successfull");
     return res.status(200).json(data);
   } catch (error) {
-    return res.status(500).json(error);
+    logger.info(
+      `Error faced while creating an order with User: ${req.body.userId}`
+    );
+    return next(createCustomError("Error faced while placing an order", 500));
+  }
+};
+
+/**
+ * @description handles request response for removing a cart.
+ * @param {Object} req
+ * @param {Object} res
+ * @param {Object} next
+ */
+ const removeCart = async (req, res, next) => {
+  try {
+    let data = await deleteCart(req.body.userId);
+    console.log(data);
+    return res.status(200).json(data);
+  } catch (error) {
+    logger.info(
+      `Error faced while removing cart details, User Id: ${req.body.userId}`
+    );
+    return next(createCustomError("Error faced while removing cart after placing order", 500));
   }
 };
 
@@ -244,4 +263,5 @@ module.exports = {
   addCustomerDetails,
   getCustomerDetails,
   deleteCartProduct,
+  removeCart
 };

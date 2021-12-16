@@ -52,6 +52,7 @@ const create = (req, res, next) => {
     email: req.body.email,
     password: req.body.password,
   };
+
   createNewUser(userDetails, (error, data) => {
     if (error)
       return next(

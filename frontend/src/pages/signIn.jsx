@@ -20,14 +20,14 @@ const useStyles = makeStyles({
     color: "#A03037",
     marginTop: "20px",
     textTransform: "none",
-    fontWeight: "550"
+    fontWeight: "550",
   },
   signInButton: {
     color: "#A03037",
     marginTop: "20px",
     textTransform: "none",
     marginRight: "200px",
-    fontWeight: "550"
+    fontWeight: "550",
   },
   submitButton: {
     color: "#ffff",
@@ -42,7 +42,7 @@ const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [redirect, setRedirect] = useState(false)
+  const [redirect, setRedirect] = useState(false);
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -50,25 +50,26 @@ const Signin = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(email === "" || password === ""){
+    if (email === "" || password === "") {
       console.log("All details must be filled");
-    }else{
+    } else {
       console.log("Valid");
       let data = {
         email,
-        password
-      }
-      api.userLogin(data)
+        password,
+      };
+      api
+        .userLogin(data)
         .then((res) => {
           console.log(res);
           // localStorage.setItem('token', res.data.token)
-          sessionStorage.setItem('token',res.data.token)
-          sessionStorage.setItem('email',data.email)
-          setRedirect(true)
+          sessionStorage.setItem("token", res.data.token);
+          sessionStorage.setItem("email", data.email);
+          setRedirect(true);
         })
         .catch((err) => {
-          console.log(err)
-          alert("Incorrect credentials")
+          console.log(err);
+          alert("Incorrect credentials");
         });
     }
   };
@@ -78,7 +79,9 @@ const Signin = () => {
         <Grid container className="gridPad">
           <Grid item container xs={12}>
             <div className="divTitleLogin">
-              <span style={{ color: "#A03037", letterSpacing:"3px" }}>Bookstore</span>
+              <span style={{ color: "#A03037", letterSpacing: "3px" }}>
+                Bookstore
+              </span>
             </div>
             <Typography variant="h5" style={{ margin: "17px 0px 0px 190px" }}>
               Sign In
@@ -123,7 +126,11 @@ const Signin = () => {
               onClick={handleClickShowPassword}
             />
 
-            <Button className={classes.signInButton} component={Link} to="/forgot-password">
+            <Button
+              className={classes.signInButton}
+              component={Link}
+              to="/forgot-password"
+            >
               Forgot password?
             </Button>
 
@@ -141,7 +148,7 @@ const Signin = () => {
           </Grid>
         </Grid>
       </Paper>
-      {redirect? <Redirect to="/books" /> : null}
+      {redirect ? <Redirect to="/books" /> : null}
     </form>
   );
 };

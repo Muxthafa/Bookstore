@@ -162,11 +162,13 @@ const resetPass = (token, newPassword) => {
   })
     .then((data) => {
       if (!data) {
+        console.log("error");
         throw "token not found";
       } else {
         encryptedPassword = bcrypt.hashSync(newPassword, 10);
         data.password = encryptedPassword;
         data.resetPasswordToken = undefined;
+        console.log(data.password);
         return data
           .save()
           .then((data) => {

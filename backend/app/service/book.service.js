@@ -21,6 +21,7 @@ const {
   addCart,
   cartDetails,
   deleteBookFromCart,
+  deleteCartDetails
 } = require("../models/cart.model.js");
 
 const { order } = require("../models/order.model.js");
@@ -148,12 +149,26 @@ const deleteProductFromCart = async (userId, bookId) => {
 };
 
 /**
- * @description
+ * @description Service layer function to create an order in database
  * @returns error or data
  */
-const placeOrder = async (orderDetails) => {
+const placeOrder = async (orderDetails, orderId) => {
+  let orderID = Date.now();
   try {
-    let data = await order(orderDetails);
+    let data = await order(orderDetails, orderID);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+/**
+ * @description Service layer function to remove cart details from database
+ * @returns error or data
+ */
+ const deleteCart = async (userId) => {
+  try {
+    let data = await deleteCartDetails(userId);
     return data;
   } catch (error) {
     throw error;
@@ -171,4 +186,5 @@ module.exports = {
   addUserDetails,
   fetchUserDetails,
   deleteProductFromCart,
+  deleteCart
 };

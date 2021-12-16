@@ -9,7 +9,7 @@ import {
   InputAdornment,
   TextField,
 } from "@material-ui/core";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, Redirect } from "react-router-dom";
 import "../css/style.css";
 import { makeStyles } from "@material-ui/styles";
 import api from "../service/UserService";
@@ -33,26 +33,27 @@ const useStyles = makeStyles({
   },
 });
 
-
 const ResetPassword = () => {
   const classes = useStyles();
 
   const [password, setPassword] = useState("");
-  let {token} = useParams()
+  const [redirect, setRedirect] = useState(false);
+
+  let { token } = useParams();
   console.log(token);
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(password === ""){
+    if (password === "") {
       console.log("password must be filled");
-    }else{
-      console.log("Valid");
+    } else {
       let data = {
-        password
-      }
-      
-      api.resetPassword(data,token)
+        password,
+      };
+
+      api
+        .resetPassword(data, token)
         .then((res) => {
-          console.log(res);
+          setRedirect(true);
         })
         .catch((err) => console.log(err));
     }
@@ -63,21 +64,13 @@ const ResetPassword = () => {
         <Grid container className="gridPad">
           <Grid item container xs={12}>
             <div className="divTitleLogin">
-              <span style={{ color: "blue" }}>F</span>
-              <span style={{ color: "red" }}>u</span>
-              <span style={{ color: "yellow" }}>n</span>
-              <span style={{ color: "blue" }}>d</span>
-              <span style={{ color: "green" }}>o</span>
-              <span style={{ color: "red" }}>o</span>
-              <span style={{ color: "blue" }}>N</span>
-              <span style={{ color: "orange" }}>o</span>
-              <span style={{ color: "indigo" }}>t</span>
-              <span style={{ color: "red" }}>e</span>
-              <span style={{ color: "yellow" }}>s</span>
+              <span style={{ color: "#A03037", letterSpacing: "3px" }}>
+                Bookstore
+              </span>
             </div>
 
-            <Typography variant="h5" style={{margin: "17px 0px 0px 100px"}}>
-            Enter the new password
+            <Typography variant="h5" style={{ margin: "17px 0px 0px 100px" }}>
+              Enter the new password
             </Typography>
 
             <div className="divPassword">
@@ -104,6 +97,7 @@ const ResetPassword = () => {
           </Grid>
         </Grid>
       </Paper>
+      {redirect ? <Redirect to="/login" /> : null}
     </form>
   );
 };

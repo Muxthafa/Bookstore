@@ -149,4 +149,18 @@ const deleteBookFromCart = async (userId, bookId) => {
   }
 };
 
-module.exports = { addCart, cartDetails, deleteBookFromCart };
+/**
+ * @description Query to delete cart after order is being placed
+ * @param userId
+ * @returns error or cart&book details
+ */
+const deleteCartDetails = async (userId) => {
+  try {
+    return await Cart.findOneAndRemove(
+      { userId: userId })
+  } catch (error) {
+    throw error;
+  }
+};
+
+module.exports = { addCart, cartDetails, deleteBookFromCart, deleteCartDetails};

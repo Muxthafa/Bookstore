@@ -8,7 +8,7 @@ import { setDeleteCart, setQuantity } from "../actions/bookActions";
 
 const CartCard = ({ cart, item }) => {
   const dispatch = useDispatch();
-  let count = item.quantity
+  let count = item.quantity;
   const handleCounter = (type) => {
     let data = {
       book: item.book._id,
@@ -35,12 +35,12 @@ const CartCard = ({ cart, item }) => {
     bookService
       .deleteCartBook(item.book._id)
       .then((res) => {
-        dispatch(setDeleteCart(item.book._id))
+        dispatch(setDeleteCart(item.book._id));
       })
       .catch((err) => {
         console.log(err);
       });
-  }
+  };
   return (
     <Grid item container padding={1}>
       <Grid item xs={4}>
@@ -74,7 +74,10 @@ const CartCard = ({ cart, item }) => {
             align="left"
             style={{ marginTop: "5px", marginLeft: "0px" }}
           >
-            <IconButton disabled={count <= 1?true:false} onClick={() => handleCounter("decrement")}>
+            <IconButton
+              disabled={count <= 1 ? true : false}
+              onClick={() => handleCounter("decrement")}
+            >
               <RemoveCircleOutlineIcon />
             </IconButton>
             <button style={{ border: "1px solid black", width: "30px" }}>

@@ -3,31 +3,31 @@ import { IconButton, TextField, InputAdornment, Grid } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useDispatch } from "react-redux";
 import bookService from "../service/BookService";
-import {setSearchedBooks, setSearchFlag} from "../actions/bookActions.js"
-import { useHistory } from 'react-router-dom';
-import '../styles/home.scss'
+import { setSearchedBooks, setSearchFlag } from "../actions/bookActions.js";
+import { useHistory } from "react-router-dom";
+import "../styles/home.scss";
 
-function Search({page}) {
-    const dispatch = useDispatch();
-    const history = useHistory();
+function Search({ page }) {
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const [search, setSearch] = useState("");
   const handleSearch = (searchValue) => {
     setSearch(searchValue);
   };
   useEffect(() => {
-      if(search.trim()){
-        history.push('/books');
-        bookService.getSearchedBooks(search)
-              .then((res) => dispatch(setSearchedBooks(res.data)));
-        dispatch(setSearchFlag("true"))
-      }else{
-          if(page){
-            dispatch(setSearchFlag("false"))
-            history.push(`/books?page=${page}`);
-          }  
+    if (search.trim()) {
+      history.push("/books");
+      bookService
+        .getSearchedBooks(search)
+        .then((res) => dispatch(setSearchedBooks(res.data)));
+      dispatch(setSearchFlag("true"));
+    } else {
+      if (page) {
+        dispatch(setSearchFlag("false"));
+        history.push(`/books?page=${page}`);
       }
-      
+    }
   }, [search]);
 
   return (
@@ -50,7 +50,6 @@ function Search({page}) {
         style: { height: "40px", backgroundColor: "white" },
       }}
     />
-
   );
 }
 

@@ -25,6 +25,9 @@ router.post("/add-to-cart", authorizeUser, books.addToCart);
 //route to retrieve cart details
 router.get("/cart", authorizeUser, books.getCart);
 
+//route to get address details
+router.delete("/cart", authorizeUser, books.removeCart);
+
 //route to remove a product with the book id from the cart
 router.delete("/cart/:id", authorizeUser, books.deleteCartProduct);
 
