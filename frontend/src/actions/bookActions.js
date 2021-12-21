@@ -47,7 +47,7 @@ export const setDeleteCart = (data) => {
   };
 };
 
-export const setCartDetails = () => {
+export const setEmptyCart = () => {
   return {
     type: "SET_REMOVE_CART",
   };

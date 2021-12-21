@@ -6,7 +6,6 @@ import {
   Checkbox,
   FormControlLabel,
   Button,
-  InputAdornment,
   TextField,
 } from "@material-ui/core";
 

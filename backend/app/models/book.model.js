@@ -58,20 +58,20 @@ const count = async () => {
  * @param sort
  * @returns error or books data
  */
-const fetchBooks = async (max, startIndex, sort) => {
+const fetchBooks = async (maxBooks, startIndex, sort) => {
   try {
     if (sort == "low") {
       return await Product.find()
         .sort({ price: 1 })
-        .limit(max)
+        .limit(maxBooks)
         .skip(startIndex);
     } else if (sort == "high") {
       return await Product.find()
         .sort({ price: -1 })
-        .limit(max)
+        .limit(maxBooks)
         .skip(startIndex);
     } else {
-      return await Product.find().sort({ _id: -1 }).limit(max).skip(startIndex);
+      return await Product.find().sort({ _id: -1 }).limit(maxBooks).skip(startIndex);
     }
   } catch (error) {
     throw error;

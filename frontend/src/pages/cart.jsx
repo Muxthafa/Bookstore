@@ -7,6 +7,11 @@ import bookService from "../service/BookService";
 import { setCartBooks } from "../actions/bookActions";
 import { useDispatch } from "react-redux";
 
+
+/**
+ * @description cart page where we have cart related components
+ * @returns 
+ */
 const Cart = () => {
   const dispatch = useDispatch();
   let token = sessionStorage.getItem("token");

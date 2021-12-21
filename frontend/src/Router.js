@@ -9,7 +9,10 @@ import Order from './pages/order.jsx'
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-
+/**
+ * @description Router component enables the navigation among various components view
+ * @returns 
+ */
 export default function Routers() {
   return (
     <>

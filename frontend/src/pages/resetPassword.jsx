@@ -3,10 +3,7 @@ import {
   Grid,
   Paper,
   Typography,
-  Checkbox,
-  FormControlLabel,
   Button,
-  InputAdornment,
   TextField,
 } from "@material-ui/core";
 import { Link, useParams, Redirect } from "react-router-dom";
@@ -33,6 +30,10 @@ const useStyles = makeStyles({
   },
 });
 
+/**
+ * @description This page allows user to enter new password and update
+ * @returns 
+ */
 const ResetPassword = () => {
   const classes = useStyles();
 

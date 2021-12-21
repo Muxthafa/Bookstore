@@ -37,7 +37,7 @@ export default function Paginate({ page, sort }) {
 
   return (
     <>
-      {flag == "false" && (
+      {flag === "false" && (
         <div id="pagination">
           <Pagination
             count={numberOfPages}

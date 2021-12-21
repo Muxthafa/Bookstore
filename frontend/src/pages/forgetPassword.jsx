@@ -3,10 +3,8 @@ import {
   Grid,
   Paper,
   Typography,
-  Checkbox,
-  FormControlLabel,
   Button,
-  InputAdornment,
+  InputAdornment, 
   TextField,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
@@ -33,6 +31,10 @@ const useStyles = makeStyles({
   },
 });
 
+/**
+ * @description This page handles forgot password where user can put in their email to reset their password
+ * @returns 
+ */
 const ForgotPassword = () => {
   const classes = useStyles();
 

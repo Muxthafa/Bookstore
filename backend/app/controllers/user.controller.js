@@ -75,38 +75,38 @@ const create = (req, res, next) => {
  * @param {Object} res
  * @param {Object} next
  */
-const findAll = (req, res, next) => {
-  findAllUsers((error, data) => {
-    if (error) {
-      return next(
-        createCustomError("Error occurred while fetching all the Users.", 404)
-      );
-    }
-    if (!data) {
-      return res.status(404).send({
-        message: "no data found",
-      });
-    }
-    const response = {
-      count: data.length,
-      Notes: data.map((user) => {
-        return {
-          name: user.name,
-          age: user.age,
-          address: user.address,
-          email: user.email,
-          password: user.password,
-          _id: user.id,
-          request: {
-            type: "GET",
-            url: "http://localhost:3000/users/" + user._id,
-          },
-        };
-      }),
-    };
-    logger.info("responded with all notes");
-    return res.status(200).json(response);
-  });
+ const findAll = async (req, res, next) => {
+  try {
+    let data = await findAllUsers()
+      if (!data) {
+        return res.status(404).send({
+          message: "no data found",
+        });
+      }
+      const response = {
+        count: data.length,
+        Users: data.map((user) => {
+          return {
+            name: user.name,
+            age: user.age,
+            address: user.address,
+            email: user.email,
+            password: user.password,
+            _id: user.id,
+            request: {
+              type: "GET",
+              url: "http://localhost:3000/users/" + user._id,
+            },
+          };
+        }),
+      };
+      logger.info("responded with all notes");
+      return res.status(200).json(response);
+  } catch (error) {
+    return next(
+      createCustomError("Error occurred while fetching all the Users.", 404)
+    );
+  }
 };
 
 /**
@@ -205,7 +205,6 @@ const forgotUserPassword = (req, res, next) => {
   let email = req.body.email;
   forgotPass(email)
     .then((data) => {
-      console.log(data);
       return res.status(200).send(data);
     })
     .catch((err) => {

@@ -13,6 +13,7 @@ export const bookReducer = (state = initialState, { type, payload }) => {
         books: payload.data,
         currentPage: payload.currentPage,
         numberOfPages: payload.numberOfPages,
+        totalBooks: payload.totalBooks
       };
     case "SET_SEARCHED_BOOKS":
       return { ...state, books: payload };

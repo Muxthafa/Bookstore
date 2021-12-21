@@ -12,10 +12,10 @@ import { useSelector } from "react-redux";
 import CartCard from "./cartCard";
 import CustomerAddress from "./customerDetails";
 import "../styles/home.scss";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import bookService from "../service/BookService";
 import { useDispatch } from "react-redux";
-import { setCartDetails } from "../actions/bookActions";
+import { setEmptyCart } from "../actions/bookActions";
 
 const AddCart = () => {
   const dispatch = useDispatch();
@@ -47,7 +47,7 @@ const AddCart = () => {
         sessionStorage.setItem("orderId", res.data.orderId);
         bookService
           .removeCart()
-          .then((res) => dispatch(setCartDetails()))
+          .then((res) => dispatch(setEmptyCart()))
           .catch((err) => console.log(err));
         setRedirect(true);
       })
@@ -119,10 +119,10 @@ const AddCart = () => {
                 align="left"
                 style={{ margin: "5% 0% 0% 35%" }}
               >
-                <Typography variant="h6">
+                <Typography >
                   Number of books : {numberOfBooks}
                 </Typography>
-                <Typography variant="h6">Total Price : {total}</Typography>
+                <Typography >Total Price : {total}</Typography>
               </Grid>
               <Grid item xs={12} align="right">
                 {myBooks.length > 0 && (

@@ -1,5 +1,9 @@
 import React from 'react'
 
+/**
+ * @description wrong url reults in rendering this component
+ * @returns 
+ */
 function Error() {
     return (
         <div>

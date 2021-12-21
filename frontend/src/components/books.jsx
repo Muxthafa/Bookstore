@@ -1,24 +1,20 @@
 import {
   Grid,
   Box,
-  CardContent,
-  Card,
-  CardMedia,
   Typography,
-  CardActions,
   Button,
   Menu,
   MenuItem,
 } from "@mui/material";
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import BooksCard from "./booksCard";
-import { setSort } from "../actions/bookActions.js";
 import { useHistory } from "react-router-dom";
 
 const Book = ({ page }) => {
-  const dispatch = useDispatch();
   const myBooks = useSelector((state) => state.allBooks.books);
+  const totalBooks = useSelector((state) => state.allBooks.totalBooks);
+
   const history = useHistory();
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -33,11 +29,9 @@ const Book = ({ page }) => {
   const handleDisplayOrder = (order) => {
     if (order === "low") {
       history.push(`/books?page=${page}&sort=${order}`);
-      // myBooks.sort((a, b) => a.price - b.price);
       handleClose();
     } else if (order === "high") {
       history.push(`/books?page=${page}&sort=${order}`);
-      // myBooks.sort((a, b) => b.price - a.price);
       handleClose();
     } else {
       history.push(`/books?page=${page}`);
@@ -49,7 +43,7 @@ const Book = ({ page }) => {
     <Box className="book-item">
       <Grid container>
         <Grid item xs={6} align="left">
-          <Typography id="book-count">Books</Typography>
+          <Typography id="book-count">Books<span id="book-count-span">{`(${totalBooks} items)`}</span></Typography>
         </Grid>
         <Grid item xs={6} align="right">
           <Button

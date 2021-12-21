@@ -1,17 +1,18 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Book from "../components/books";
 import Appbar from "../components/appbar";
 import { Box } from "@mui/system";
-import bookService from "../service/BookService";
-import { setBooks } from "../actions/bookActions.js";
-import Pagination from "../components/pagination.jsx";
-import { useHistory, useLocation, Redirect } from "react-router-dom";
+import { useLocation, Redirect } from "react-router-dom";
 import Paginate from "../components/pagination.jsx";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
+/**
+ * @description main page which is divided into appbar, book, paginate component
+ * @returns 
+ */
 const Dashboard = () => {
   let token = sessionStorage.getItem("token");
   const query = useQuery();

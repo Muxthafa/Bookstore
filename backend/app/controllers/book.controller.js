@@ -48,9 +48,10 @@ const findAll = async (req, res, next) => {
       data: books,
       currentPage: Number(page),
       numberOfPages: Math.ceil(total / limit),
+      totalBooks: total
     });
   } catch (error) {
-    logger.info(
+    logger.error(
       `Error faced while fetching all the Books by User: ${req.body.userId}`
     );
     return next(
@@ -79,7 +80,7 @@ const addToCart = async (req, res, next) => {
     logger.info(`Added the book to the cart by the user ${req.body.userId}`);
     return res.status(200).json(data);
   } catch (error) {
-    logger.info(
+    logger.error(
       `Error faced while adding a book to the cart by User: ${req.body.userId}`
     );
     return next(createCustomError("Error occurred while adding a book.", 500));
@@ -125,7 +126,7 @@ const getCart = async (req, res) => {
     }
     return res.status(200).send(data);
   } catch (error) {
-    logger.info(
+    logger.error(
       `Error faced while fetching cart data by the User: ${req.body.userId}`
     );
     return next(
@@ -157,7 +158,7 @@ const addCustomerDetails = async (req, res, next) => {
     logger.info(`Added address details by the User: ${req.body.userId}`);
     return res.status(200).json(data);
   } catch (error) {
-    logger.info(
+    logger.error(
       `Error faced while adding address details of the User: ${req.body.userId}`
     );
     return next(
@@ -181,7 +182,7 @@ const getCustomerDetails = async (req, res, next) => {
     }
     return res.status(200).json(data);
   } catch (error) {
-    logger.info(
+    logger.error(
       `Error faced while fetching address details of the User: ${req.body.userId}`
     );
     return next(
@@ -204,7 +205,7 @@ const deleteCartProduct = async (req, res, next) => {
     );
     return res.status(200).json(data);
   } catch (error) {
-    logger.info(
+    logger.error(
       `Error faced while removing product from the cart with User: ${req.body.userId}`
     );
     return next(
@@ -228,7 +229,7 @@ const createOrder = async (req, res, next) => {
     logger.info("create order successfull");
     return res.status(200).json(data);
   } catch (error) {
-    logger.info(
+    logger.error(
       `Error faced while creating an order with User: ${req.body.userId}`
     );
     return next(createCustomError("Error faced while placing an order", 500));
@@ -244,10 +245,9 @@ const createOrder = async (req, res, next) => {
  const removeCart = async (req, res, next) => {
   try {
     let data = await deleteCart(req.body.userId);
-    console.log(data);
     return res.status(200).json(data);
   } catch (error) {
-    logger.info(
+    logger.error(
       `Error faced while removing cart details, User Id: ${req.body.userId}`
     );
     return next(createCustomError("Error faced while removing cart after placing order", 500));

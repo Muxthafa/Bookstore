@@ -2,19 +2,16 @@ import React, { useState } from "react";
 import {
   CardContent,
   Card,
-  CardMedia,
   Typography,
   CardActions,
   Button,
 } from "@mui/material";
 import bookService from "../service/BookService";
-import { useDispatch } from "react-redux";
-import { setQuantity } from "../actions/bookActions";
 
 function BooksCard({ book }) {
   const [wishlist, setWishlist] = useState(false);
   const [cart, setCart] = useState(false);
-  const dispatch = useDispatch();
+
   const handleCart = () => {
     let data = {
       book: book._id,
@@ -63,12 +60,14 @@ function BooksCard({ book }) {
           onClick={handleCart}
           fullWidth="true"
           style={
-            !cart
-              ? { backgroundColor: "#A03037", color: "white" }
-              : { display: "none" }
+            !cart && wishlist
+                ? { background: "#3371B5", color: "white", width: "100%" }
+                : !cart
+                ? { backgroundColor: "#A03037", color: "white", width: "100%" }
+                : { display: "none" }
           }
         >
-          Add to bag
+          {!cart && wishlist ? "Added to bag" : "Add to bag"}
         </Button>
         <Button
           style={

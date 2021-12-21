@@ -13,7 +13,6 @@
 const express = require("express");
 const router = express.Router(); //middleware creates route handler
 const books = require("../controllers/book.controller.js");
-const validate = require("../validation/user.validation.js");
 const { authorizeUser } = require("../middleware/user.middleware.js");
 
 //get all users

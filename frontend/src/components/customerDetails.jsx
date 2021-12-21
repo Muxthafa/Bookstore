@@ -22,6 +22,13 @@ const CustomerAddress = ({
   handleExpanded,
   handleExpandedSummary,
 }) => {
+
+  let errorMessage = {
+    nameErrorMsg: "",
+    phoneErrorMsg: "",
+    pincodeErrorMsg: "",
+  };
+
   const initialCustomerState = {
     name: "",
     phone: "",
@@ -33,6 +40,62 @@ const CustomerAddress = ({
     addressType: "Home",
   };
   const [details, setDetails] = useState(initialCustomerState);
+  const [errorMessages, setErrorMessage] = useState(errorMessage);
+  const [nameError, setNameError] = useState(false);
+  const [phoneError, setPhoneError] = useState(false);
+  const [pincodeError, setPincodeError] = useState(false);
+
+  const validate = () => {
+    
+    let flagError = false;
+    const phonePattern = new RegExp("^[1-9][0-9]{9}$");
+    const pincodePattern = new RegExp("^[1-9][0-9]{5}$");
+
+    if (details.name === "") {
+      setNameError(true);
+      setErrorMessage((prev) => {
+        return { ...prev, nameErrorMsg: "Name cannot be empty" };
+      });
+      flagError = true;
+    }
+    if (details.phone === "") {
+      setPhoneError(true);
+      setErrorMessage((prev) => {
+        return { ...prev, phoneErrorMsg: "Phone number cannot be empty" };
+      });
+      flagError = true;
+    }
+
+    if (!phonePattern.test(details.phone)) {
+      setPhoneError(true);
+      setErrorMessage((prev) => {
+        return { ...prev, phoneErrorMsg: "Not a valid phone number" };
+      });
+      flagError = true;
+    }
+
+    if (details.pincode === "") {
+      setPincodeError(true);
+      setErrorMessage((prev) => {
+        return { ...prev, pincodeErrorMsg: "Pincode cannot be empty" };
+      });
+      flagError = true;
+    }
+
+    if (!pincodePattern.test(details.pincode)) {
+      setPincodeError(true);
+      setErrorMessage((prev) => {
+        return { ...prev, pincodeErrorMsg: "Not a valid pincode" };
+      });
+      flagError = true;
+    }
+
+    if (flagError) {
+      return false;
+    } else {
+      return true;
+    }
+  };
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -52,7 +115,11 @@ const CustomerAddress = ({
   }, []);
 
   const handleUpdate = () => {
-    handleExpanded();
+    setNameError(false)
+    setPhoneError(false)
+    setPincodeError(false)
+    if(validate()){
+      handleExpanded();
     handleExpandedSummary();
     bookService
       .addCustomerDetails(details)
@@ -62,6 +129,9 @@ const CustomerAddress = ({
       .catch((err) => {
         console.log(err);
       });
+    }else{
+      console.log("There is an error");
+    }
   };
 
   return (
@@ -86,6 +156,8 @@ const CustomerAddress = ({
                   type="text"
                   variant="outlined"
                   fullWidth
+                  error={nameError}
+                  helperText={nameError && errorMessages.nameErrorMsg}
                   value={details.name}
                   onChange={handleInputChange}
                 />
@@ -99,6 +171,8 @@ const CustomerAddress = ({
                   type="text"
                   variant="outlined"
                   fullWidth
+                  error={phoneError}
+                  helperText={phoneError && errorMessages.phoneErrorMsg}
                   value={details.phone}
                   onChange={handleInputChange}
                 />
@@ -112,6 +186,8 @@ const CustomerAddress = ({
                   type="text"
                   variant="outlined"
                   fullWidth
+                  error={pincodeError}
+                  helperText={pincodeError && errorMessages.pincodeErrorMsg}
                   value={details.pincode}
                   onChange={handleInputChange}
                 />
